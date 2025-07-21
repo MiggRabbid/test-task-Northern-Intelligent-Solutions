@@ -9,6 +9,7 @@ export const githubApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     prepareHeaders: (headers) => {
+      console.log('Using token:', process.env.GITHUB_TOKEN);
       headers.set('Authorization', `Bearer ${process.env.GITHUB_TOKEN}`);
       return headers;
     },
@@ -31,7 +32,10 @@ export const githubApi = createApi({
           variables: { query, first, after, orderBy },
         },
       }),
-      transformResponse: (response: ISearchResponse) => response.data.search,
+      transformResponse: (response: ISearchResponse) => {
+        console.log('response:', response);
+        return response.data.search;
+      },
     }),
   }),
 });

@@ -1,3 +1,1 @@
-import { useSearchReposQuery } from './api';
-
-export { useSearchReposQuery };
+export { githubApi, useSearchReposQuery } from './api';

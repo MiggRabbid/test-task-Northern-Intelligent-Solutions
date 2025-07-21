@@ -7,7 +7,7 @@ export const routes = {
 export const method = { POST: 'POST' } as const;
 
 export const SEARCH_REPOS_QUERY = `
-  query($query: String!, $first: Int, $after: String, $orderBy: RepositoryOrder) {
+  query($query: String!, $first: Int, $after: String) {
     search(query: $query, type: REPOSITORY, first: $first, after: $after) {
       repositoryCount
       edges {
