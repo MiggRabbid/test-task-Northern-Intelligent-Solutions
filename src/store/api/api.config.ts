@@ -15,12 +15,11 @@ export const SEARCH_REPOS_QUERY = `
           ... on Repository {
             id
             name
-            description
+            createdAt
             forkCount
             stargazerCount
             primaryLanguage { name }
             updatedAt
-            licenseInfo { name }
           }
         }
       }
