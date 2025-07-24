@@ -2,29 +2,30 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { BASE_URL, method, routes, SEARCH_REPOS_QUERY } from './api.config';
 
-import { ISearchResponse } from './api.type';
+import { ISearchData, ISearchResponse } from './api.types';
+import { IOrderBy } from '../slices/global.types';
 
 export const githubApi = createApi({
   reducerPath: 'githubApi',
+  tagTypes: ['Repo'],
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     prepareHeaders: (headers) => {
-      console.log('Using token:', process.env.GITHUB_TOKEN);
       headers.set('Authorization', `Bearer ${process.env.GITHUB_TOKEN}`);
       return headers;
     },
   }),
   endpoints: (build) => ({
     searchRepos: build.query<
-      ISearchResponse['data']['search'],
+      ISearchData,
       {
         query: string;
         first?: number;
         after?: string;
-        orderBy?: { field: 'STARS' | 'Forks' | 'UPDATED_AT'; direction: 'ASC' | 'DESC' };
+        orderBy?: IOrderBy;
       }
     >({
-      query: ({ query, first = 10, after, orderBy }) => ({
+      query: ({ query, first = 30, after, orderBy }) => ({
         url: routes.graphql,
         method: method.POST,
         body: {
@@ -32,8 +33,7 @@ export const githubApi = createApi({
           variables: { query, first, after, orderBy },
         },
       }),
-      transformResponse: (response: ISearchResponse) => {
-        console.log('response:', response);
+      transformResponse: (response: ISearchResponse): ISearchData => {
         return response.data.search;
       },
     }),
