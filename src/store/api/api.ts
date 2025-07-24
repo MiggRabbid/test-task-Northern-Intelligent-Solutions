@@ -1,8 +1,14 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-import { BASE_URL, method, routes, SEARCH_REPOS_QUERY } from './api.config';
+import {
+  BASE_URL,
+  GET_REPO_BY_ID_QUERY,
+  method,
+  routes,
+  SEARCH_REPOS_QUERY,
+} from './api.config';
 
-import { ISearchData, ISearchResponse } from './api.types';
+import { IRepoById, IRepoByIdResponse, ISearchData, ISearchResponse } from './api.types';
 import { IOrderBy } from '../slices/global.types';
 
 export const githubApi = createApi({
@@ -37,7 +43,20 @@ export const githubApi = createApi({
         return response.data.search;
       },
     }),
+    getRepoById: build.query<IRepoById, string>({
+      query: (id) => ({
+        url: routes.graphql,
+        method: method.POST,
+        body: {
+          query: GET_REPO_BY_ID_QUERY,
+          variables: { id },
+        },
+      }),
+      transformResponse: (response: IRepoByIdResponse) => {
+        return response.data.node;
+      },
+    }),
   }),
 });
 
-export const { useSearchReposQuery } = githubApi;
+export const { useSearchReposQuery, useGetRepoByIdQuery } = githubApi;

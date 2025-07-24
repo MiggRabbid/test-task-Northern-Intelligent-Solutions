@@ -30,3 +30,30 @@ export interface ISearchData {
 export interface ISearchResponse {
   data: { search: ISearchData };
 }
+
+export interface IRepoById {
+  id: string;
+  name: string;
+  description: string;
+  forkCount: number;
+  stargazerCount: number;
+  updatedAt: string;
+  licenseInfo: IName | null;
+  primaryLanguage: IName | null;
+  owner: { login: string };
+  repositoryTopics: {
+    nodes: {
+      topic: IName;
+    }[];
+  };
+}
+
+export interface IRepoByIdResponse {
+  data: {
+    node: IRepoById;
+  };
+}
+
+export interface IName {
+  name: string;
+}

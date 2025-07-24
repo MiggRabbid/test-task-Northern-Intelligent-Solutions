@@ -32,3 +32,28 @@ export const SEARCH_REPOS_QUERY = `
     }
   }
 `;
+
+export const GET_REPO_BY_ID_QUERY = `
+  query($id: ID!) {
+    node(id: $id) {
+      ... on Repository {
+        id
+        name
+        description
+        forkCount
+        stargazerCount
+        updatedAt
+        licenseInfo { name }
+        primaryLanguage { name }
+        owner { login }
+        repositoryTopics(first: 10) {
+          nodes {
+            topic {
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+`;

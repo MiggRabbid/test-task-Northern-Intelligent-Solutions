@@ -8,7 +8,7 @@ const ReposTableItem = (props: IReposTableItemProps) => {
   const { item, ...otherProps } = props;
 
   return (
-    <TableCell className="w-1/5!" {...otherProps}>
+    <TableCell className="w-1/5! px-2! py-4! text-sm!" {...otherProps}>
       {item}
     </TableCell>
   );

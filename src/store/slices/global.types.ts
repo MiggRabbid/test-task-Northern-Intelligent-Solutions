@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 export interface IGlobalState {
+  openRepos: string | null;
   searchData: string;
   first: number;
   cursor: string | undefined;
